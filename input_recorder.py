@@ -1,5 +1,5 @@
 import pyglet
-from sys import stdin
+from sys import stdout
 from pyglet.window import Window
 import time
 from JSONHandler import MyJSONEncoder
@@ -50,7 +50,7 @@ class MyWindow(Window):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="get destination file")
     parser.add_argument('-o', nargs=1, type=argparse.FileType('w+'),
-                        default=stdin)
+                        default=stdout)
     args = parser.parse_args()
     output = args.o[0]
     output.write("\"{commands: [")
