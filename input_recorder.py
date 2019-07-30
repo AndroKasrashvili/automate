@@ -15,6 +15,7 @@ class MyWindow(Window):
         super().__init__(width=width, height=height, caption=name)
         self.events = []
         self.buff = fileBuff
+        self.is_first = True
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
         self.events.append(Schedule(time.clock_gettime(time.CLOCK_MONOTONIC_RAW),
@@ -37,12 +38,17 @@ class MyWindow(Window):
             constants.CommandId.SYNTHESIZE_TOUCH_INPUT.value,
             self.events
         )
-        cmd_json_string = json.dumps(MyJSONEncoder().encode(cmd))
-        self.buff.write(cmd_json_string[1:len(cmd_json_string) - 1])
+        cmd_json_string = json.dumps(cmd, cls=MyJSONEncoder)
+        if self.is_first:
+            self.is_first = False
+        else:
+            self.buff.write(',\n')
+
+        self.buff.write(cmd_json_string)
         self.events = []
 
     def on_close(self):
-        self.buff.write("]}\"")
+        self.buff.write("]")
         self.buff.close()
         super().on_close()
 
@@ -53,7 +59,7 @@ if __name__ == "__main__":
                         default=stdout)
     args = parser.parse_args()
     output = args.o[0]
-    output.write("\"{commands: [")
+    output.write("[")
     win = MyWindow(width=800, height=600, name='window', fileBuff=args.o[0])
     pyglet.app.run()
 
