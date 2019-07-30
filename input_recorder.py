@@ -1,20 +1,22 @@
+from abc import ABC
+
 import pyglet
 from sys import stdout
 from pyglet.window import Window
 import time
-from JSONHandler import MyJSONEncoder
-from Command import Command
-from Schedule import Schedule
+from json_handler import MyJSONEncoder
+from command import Command
+from schedule import Schedule
 import json
 import constants
 import argparse
 
 
 class MyWindow(Window):
-    def __init__(self, width, height, name, fileBuff):
+    def __init__(self, width, height, name, file_buff):
         super().__init__(width=width, height=height, caption=name)
         self.events = []
-        self.buff = fileBuff
+        self.buff = file_buff
         self.is_first = True
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
@@ -60,6 +62,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     output = args.o[0]
     output.write("[")
-    win = MyWindow(width=800, height=600, name='window', fileBuff=args.o[0])
+    win = MyWindow(width=800, height=600, name='window', file_buff=args.o[0])
     pyglet.app.run()
 
