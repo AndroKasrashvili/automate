@@ -1,4 +1,6 @@
 from schedule import Schedule
+
+
 class Command:
     def __init__(self, cmd_type, command_id, touch_schedule):
         self.type = cmd_type

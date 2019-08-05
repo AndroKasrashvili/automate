@@ -62,6 +62,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     output = args.o[0]
     output.write("[")
-    win = MyWindow(width=800, height=600, name='window', file_buff=args.o[0])
+    win = MyWindow(width=800, height=600, name='input_recorder', file_buff=args.o[0])
     pyglet.app.run()
-
